@@ -22,22 +22,13 @@ Your introduction text goes here.
 The main content of your essay. You can use \textbackslash{}section and \textbackslash{}subsection commands to organize your document into sections and subsections.
 \subsection{Subsection Example}
 Example of a subsection.
+Example of a citation\cite{latexcompanion}.
 
 \section{Conclusion}
 Your conclusion text goes here.
 
-% If you have references
-%\begin{thebibliography}{9}
-%\bibitem{latexcompanion} 
-%Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
-%\textit{The \LaTeX\ Companion}. 
-%Addison-Wesley, Reading, Massachusetts, 1993.
-%
-%\bibitem{einstein} 
-%Albert Einstein. 
-%\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
-%[\textit{On the Electrodynamics of Moving Bodies}]. 
-%Annalen der Physik, 322(10):891–921, 1905.
-%\end{thebibliography}
+% references
+\bibliographystyle{plain} % Defines the bibliography style
+\bibliography{references} % The filename of your .bib file
 
 \end{document}
