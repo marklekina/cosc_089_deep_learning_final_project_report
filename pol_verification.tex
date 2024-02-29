@@ -1,0 +1,42 @@
+
+\begin{algorithm}
+    \caption{Verifying a PoL}\label{alg:pol}
+    \begin{algorithmic}
+    \Function{Verify}{$R, T_0, K', F', D, Q, \delta$}
+    \State$W', H, M \gets \text{dec}(R,K',F',D)$ \Comment{encrypted PoLs, V's Private keys (query budget), slack parameter}
+    \If{$\text{VerifyInitialization}(W_0) = \text{FAIL}$}
+    \State\Return\text{FAIL}
+    \ElsIf{$\text{VerifyFinalProof}(r') = \text{FAIL}$}
+    \State\Return\text{FAIL}
+    \EndIf % chktex 1
+    \State$c \gets t \gets 0$ \Comment{Epoch counter, training step}
+    \State$\text{mag} \gets [\,]$ \Comment{Lost model update magnitudes}
+    \For{$t = 1, \dots, T-1$}
+    \If{$\text{mod}(k) = 0 \wedge t \neq 0$}
+    \State$\text{mag.append}(d(W_t - W_{t-k}))$
+    \EndIf % chktex 1
+    \State$e_t \gets |s|$ \Comment{Recovering the epoch number}
+    \If{$e_t = e + 1$}
+    \State\text{New epoch started. Verify the last epoch}
+    \State$\text{idz} \gets \text{sortedIndices}(\text{mag},t)$ \Comment{get indices for decreasing order of magnitude}
+    \If{$\text{VerifyEpoch}(\text{idz}) = \text{FAIL}$}
+    \State\Return\text{FAIL}
+    \EndIf % chktex 1
+    \EndIf % chktex 1
+    \EndFor % chktex 1
+    \State\Return\text{Success}
+    \EndFunction % chktex 1
+    \Function{VerifyEpoch}{$\text{idz}$}
+    \For{$q$ \text{index of $q$th largest update}}
+    \State$\text{VerifyDataSignature}(H_{t+l_t},D[l_t],M_{t+l_t})$
+    \State$W'_{t+l_t} \gets W'_t + M_{t+l_t}$ \Comment{update ($W'_t; D[l_t], M_{t+l_t}$)}
+    \State$W_{t+k} \gets W_{t+k}$
+    \State$\text{Dist.func.} d_z$
+    \If{$d_z(W'_{t+l_t} + W_{t+k}) > \delta$}
+    \State\Return\text{FAIL}
+    \EndIf % chktex 1
+    \EndFor % chktex 1
+    \State\Return\text{Success}
+    \EndFunction % chktex 1
+    \end{algorithmic}
+\end{algorithm}

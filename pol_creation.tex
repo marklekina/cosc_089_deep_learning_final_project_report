@@ -1,0 +1,31 @@
+\begin{algorithm}\label{alg:pol_creation}
+    \caption{PoL Creation Algorithm}
+    \begin{algorithmic}
+    \State\textbf{Input:} Dataset $D$, Training metadata $M$
+    \State\textbf{Input:} V's public key $K^{\text{pub}}_v$
+    \State\textbf{Input:} $E, S, k$ (number of epochs, steps per epoch, checkpointing interval)
+    \State\textbf{Optional:} Initialization weight and strategy: $W_0$
+    
+    \State$W \gets \{I\}$, $I \gets \emptyset$, $M \gets \emptyset$
+    
+    \If{$W_0 = \emptyset$}
+        \State$M_0 \gets \text{init ()}$
+    \EndIf     % chktex 1
+    \For{$e = 0, 1, \ldots, E - 1$} \Comment{Training epochs}
+        \State$I \gets \text{getBatches}(D, S)$
+        \For{$s = 0, 1, \ldots, S - 1$} \Comment{Steps per epoch}
+            \State$t \gets e \cdot S + s$
+            \State$W_{t+1} \gets \text{update}(W_t, D[I_s], M)$
+            \State$L \gets l$ \Comment{Assuming `l' is defined somewhere}
+            \State$H \gets h(D[I_s])$ \Comment{Assuming `h' is a function defined somewhere}
+            \If{$\text{mod}(t, k) = 0$}
+                \State Continue % chktex 1
+            \EndIf % chktex 1
+        \EndFor % chktex 1
+    \EndFor % chktex 1
+    
+    \State$A \gets \{M\}$
+    \State$R \gets \text{enc}((W, I, H, A), K^{\text{pub}}_v)$
+    \State\Return$R, h(R, K^{\text{priv}}_e)$
+    \end{algorithmic}
+\end{algorithm}
