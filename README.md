@@ -1,3 +1,4 @@
-# cosc_089_deep_learning_final_project_report
+# COSC 089 Deep Learning
+## Project Milestone #4: Final Report
 
-Repository for the LaTeX files for the class' final project report
+LaTeX files for the final project report.
